@@ -1,0 +1,210 @@
+<script>
+  // Simple password protection
+  var password = prompt("Enter your password to access this page:");
+
+  if (password !== "blue") {
+    alert("Incorrect password, you are not allowed to access this page.");
+    document.body.innerHTML = ""; // Clears the page if the password is wrong
+  }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Am I Feeling Today?</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js for visualization -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+            background-color: rgba(255, 255, 255, 0.75); /* Softer rainbow background */
+            background-blend-mode: multiply;
+            color: white;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input[type="range"] {
+            width: 80%;
+            margin-right: 10px;
+        }
+
+        .slider-value {
+            display: inline-block;
+            width: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        .quote-section, .reflection-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 223, 186, 0.9);
+            border-radius: 8px;
+            color: #333;
+            font-style: italic;
+            display: none; /* Initially hidden */
+        }
+
+        #moodChart {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>How Am I Feeling Today?</h1>
+
+        <form id="moodForm">
+            <!-- Emotional Category -->
+            <h2>Emotional Feels</h2>
+            <label for="happiness">Happiness</label>
+            <input type="range" id="happiness" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="happinessValue">5</span>
+
+            <label for="anxiety">Anxiety</label>
+            <input type="range" id="anxiety" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="anxietyValue">5</span>
+
+            <label for="sadness">Sadness</label>
+            <input type="range" id="sadness" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="sadnessValue">5</span>
+
+            <label for="frustration">Frustration</label>
+            <input type="range" id="frustration" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="frustrationValue">5</span>
+
+            <label for="excitement">Excitement</label>
+            <input type="range" id="excitement" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="excitementValue">5</span>
+
+            <label for="loneliness">Loneliness</label>
+            <input type="range" id="loneliness" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="lonelinessValue">5</span>
+
+            <label for="gratitude">Gratitude</label>
+            <input type="range" id="gratitude" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="gratitudeValue">5</span>
+
+            <label for="anger">Anger</label>
+            <input type="range" id="anger" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="angerValue">5</span>
+
+            <label for="guilt">Guilt</label>
+            <input type="range" id="guilt" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="guiltValue">5</span>
+
+            <label for="pride">Pride</label>
+            <input type="range" id="pride" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="prideValue">5</span>
+
+            <!-- Physical Category -->
+            <h2>Physical Feels</h2>
+            <label for="energy">Energy Levels</label>
+            <input type="range" id="energy" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="energyValue">5</span>
+
+            <label for="tension">Tension</label>
+            <input type="range" id="tension" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="tensionValue">5</span>
+
+            <label for="pain">Pain</label>
+            <input type="range" id="pain" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="painValue">5</span>
+
+            <label for="hunger">Hunger</label>
+            <input type="range" id="hunger" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="hungerValue">5</span>
+
+            <label for="restlessness">Restlessness</label>
+            <input type="range" id="restlessness" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="restlessnessValue">5</span>
+
+            <!-- Spiritual Category -->
+            <h2>Spiritual Feels</h2>
+            <label for="inner_peace">Inner Peace</label>
+            <input type="range" id="inner_peace" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="innerPeaceValue">5</span>
+
+            <label for="connectedness">Connectedness</label>
+            <input type="range" id="connectedness" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="connectednessValue">5</span>
+
+            <label for="purposefulness">Purposefulness</label>
+            <input type="range" id="purposefulness" min="1" max="10" step="1" value="5">
+            <span class="slider-value" id="purposefulnessValue">5</span>
+
+            <!-- Journal Entry -->
+            <h2>Journal Entry</h2>
+            <label for="journal">Write your thoughts:</label>
+            <textarea id="journal" rows="5" placeholder="How are you feeling today?"></textarea>
+
+            <input type="submit" value="Save Today's Entry">
+        </form>
+
+        <!-- Mood Trends Chart -->
+        <h2>Daily Mood Trends</h2>
+        <canvas id="moodChart"></canvas>
+
+        <!-- Reflection Prompts Section -->
+        <div class="reflection-section" id="reflectionSection">
+            <h2>Reflection Prompt</h2>
+            <p id="reflectionPrompt">What could you do tomorrow to improve, or would you change nothing at all?</p>
+        </div>
+
+        <!-- Personalized Quote Section -->
+        <div class="quote-section" id="quoteSection">
+            <h2>Thanks for submitting! Here's a quote for you:</h2>
+            <p id="personalQuote">"You are capable of more than you know."</p>
+        </div>
+    </div>
+
+    <script>
+        // Event listener to update slider values dynamically
+        const sliders =
